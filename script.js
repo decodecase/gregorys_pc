@@ -287,13 +287,19 @@ async function openWindow(type) {
         </div>
         ${content}`;
     
+    // Set initial position before adding to DOM
+    windowElement.style.position = 'absolute';
+    windowElement.style.top = '50%';
+    windowElement.style.left = '50%';
+    windowElement.style.transform = 'translate(-50%, -50%)';
+    
     // Add window to container
     windowsContainer.appendChild(windowElement);
     
-    // Set initial position (slightly offset for multiple windows)
-    const offset = activeWindows.length * 20;
-    windowElement.style.top = `${100 + offset}px`;
-    windowElement.style.left = `${100 + offset}px`;
+    // Make window visible after a short delay to ensure rendering
+    setTimeout(() => {
+        windowElement.classList.add('visible');
+    }, 10);
     
     // Add to active windows
     activeWindows.push({
