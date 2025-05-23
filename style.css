@@ -167,6 +167,64 @@ body {
     line-height: 1.2;
 }
 
+/* Games container */
+.games-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    gap: 16px;
+    padding: 16px;
+    overflow-y: auto;
+    height: calc(100% - 40px);
+}
+
+.game-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    text-align: center;
+    width: 72px;
+    height: 90px;
+    overflow: hidden;
+}
+
+.game-icon:hover {
+    background-color: rgba(0, 120, 212, 0.3);
+    transform: translateY(-2px);
+}
+
+.game-icon:active {
+    transform: translateY(0);
+}
+
+.game-icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    margin-bottom: 6px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-icon span {
+    font-size: 11px;
+    line-height: 1.2;
+    height: 2.4em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    color: #f0f0f0;
+}
+
 /* Notes Styles */
 .notes-container {
     display: flex;

@@ -302,8 +302,14 @@ async function openWindow(type) {
         isMaximized: false,
         isMinimized: false,
         position: { x: 100 + offset, y: 100 + offset },
-        size: { width: 600, height: 400 }
+        size: { width: 500, height: 400 }
     });
+    
+    // Set initial size for games window
+    if (type === 'games') {
+        windowElement.style.width = '500px';
+        windowElement.style.height = '400px';
+    }
     
     // Show with animation
     setTimeout(() => {
