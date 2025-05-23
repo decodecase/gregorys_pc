@@ -50,10 +50,72 @@
         <!-- Windows Container -->
         <div id="windows-container"></div>
 
+        <!-- Start Menu -->
+        <div id="start-menu" class="start-menu">
+            <div class="start-menu-header">
+                <div class="user-profile">
+                    <i class="fas fa-user"></i>
+                    <span>User</span>
+                </div>
+            </div>
+            <div class="start-menu-content">
+                <div class="start-menu-apps">
+                    <div class="app-list">
+                        <div class="app-item" onclick="openWindow('notes')">
+                            <i class="fas fa-sticky-note"></i>
+                            <span>Notes</span>
+                        </div>
+                        <div class="app-item" onclick="openWindow('documents')">
+                            <i class="fas fa-folder"></i>
+                            <span>Documents</span>
+                        </div>
+                        <div class="app-item" onclick="openWindow('photos')">
+                            <i class="fas fa-images"></i>
+                            <span>Photos</span>
+                        </div>
+                        <div class="app-item" onclick="openWindow('games')">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Murder Mystery Games</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="start-menu-recommended">
+                    <h3>Recommended</h3>
+                    <div class="recommended-items">
+                        <div class="recommended-item" onclick="openWindow('notes')">
+                            <i class="fas fa-sticky-note"></i>
+                            <div class="recommended-info">
+                                <span class="recommended-title">Notes</span>
+                                <span class="recommended-desc">Your personal notes</span>
+                            </div>
+                        </div>
+                        <div class="recommended-item" onclick="openWindow('games')">
+                            <i class="fas fa-gamepad"></i>
+                            <div class="recommended-info">
+                                <span class="recommended-title">Murder Mystery Games</span>
+                                <span class="recommended-desc">Collection of mystery games</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="start-menu-footer">
+                <div class="user-profile">
+                    <i class="fas fa-user"></i>
+                    <span>User</span>
+                </div>
+                <div class="power-options">
+                    <button class="power-button">
+                        <i class="fas fa-power-off"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Taskbar -->
         <div class="taskbar">
             <div class="taskbar-left">
-                <button class="start-button">
+                <button id="start-button" class="start-button">
                     <i class="fab fa-windows"></i>
                 </button>
             </div>

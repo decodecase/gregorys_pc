@@ -324,8 +324,70 @@ async function openWindow(type) {
         bringToFront(windowId);
     });
     
+    // Simple Start Menu Toggle
+    const startButton = document.getElementById('start-button');
+    const startMenu = document.getElementById('start-menu');
+    
+    // Make sure elements exist
+    if (startButton && startMenu) {
+        // Toggle menu on button click
+        startButton.onclick = function(e) {
+            e.stopPropagation();
+            startMenu.classList.toggle('visible');
+        };
+        
+        // Close menu when clicking outside
+        document.onclick = function(e) {
+            if (!startMenu.contains(e.target) && e.target !== startButton) {
+                startMenu.classList.remove('visible');
+            }
+        };
+        
+        // Prevent menu from closing when clicking inside it
+        startMenu.onclick = function(e) {
+            e.stopPropagation();
+        };
+    }
+    
     return windowElement;
 }
+
+// Initialize Start Menu
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
+    const startButton = document.getElementById('start-button');
+    const startMenu = document.getElementById('start-menu');
+    
+    console.log('Start button:', startButton);
+    console.log('Start menu:', startMenu);
+    
+    if (startButton && startMenu) {
+        console.log('Adding event listeners for start menu');
+        
+        // Toggle menu on button click
+        startButton.onclick = function(e) {
+            console.log('Start button clicked');
+            e.stopPropagation();
+            startMenu.classList.toggle('visible');
+        };
+        
+        // Close menu when clicking outside
+        document.onclick = function(e) {
+            if (!startMenu.contains(e.target) && e.target !== startButton) {
+                console.log('Clicked outside, closing menu');
+                startMenu.classList.remove('visible');
+            }
+        };
+        
+        // Prevent menu from closing when clicking inside it
+        startMenu.onclick = function(e) {
+            console.log('Clicked inside menu');
+            e.stopPropagation();
+        };
+    } else {
+        console.error('Could not find start button or menu');
+    }
+});
 
 // Make a window draggable
 function makeDraggable(element) {
