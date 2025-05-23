@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 11 Desktop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Lock Screen -->
+    <div id="lock-screen" class="screen">
+        <div class="login-container">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h2>Welcome</h2>
+            <div class="input-container">
+                <input type="password" id="password" placeholder="Enter password to unlock:" autofocus>
+                <button onclick="unlock()">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p id="error-msg" class="hidden">Incorrect password. Try again.</p>
+        </div>
+    </div>
+
+    <!-- Desktop -->
+    <div id="desktop" class="screen hidden">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindow('notes')">
+                <i class="fas fa-sticky-note"></i>
+                <span>Notes</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('documents')">
+                <i class="fas fa-folder"></i>
+                <span>Documents</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('photos')">
+                <i class="fas fa-images"></i>
+                <span>Photos</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('games')">
+                <i class="fas fa-gamepad"></i>
+                <span>Murder Mystery Games</span>
+            </div>
+        </div>
+
+        <!-- Windows Container -->
+        <div id="windows-container"></div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="taskbar-left">
+                <button class="start-button">
+                    <i class="fab fa-windows"></i>
+                </button>
+            </div>
+            <div class="taskbar-center">
+                <!-- Taskbar icons will be added here -->
+            </div>
+            <div class="taskbar-right">
+                <div id="clock">
+                    <span id="time">11:23 AM</span>
+                    <span id="date">5/23/2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
