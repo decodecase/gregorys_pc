@@ -192,38 +192,21 @@ body {
 }
 
 .note-item i {
-    color: #4fc3f7;
-    width: 20px;
-    text-align: center;
+    font-size: 32px;
+    margin-bottom: 8px;
 }
 
 .note-item span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.note-content {
-    padding: 16px;
-    flex: 1;
-    overflow-y: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 8px;
-}
-
-.notes-loading {
-    padding: 20px;
+    font-size: 12px;
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
-    font-style: italic;
+    word-break: break-word;
+    width: 100%;
 }
 
 .error {
     color: #ff6b6b;
-    padding: 10px;
-    background: rgba(255, 107, 107, 0.1);
-    border-radius: 4px;
-    margin: 10px;
+    padding: 16px;
+    text-align: center;
 }
 
 /* Modal Styles */
@@ -238,28 +221,27 @@ body {
     z-index: 1000;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(3px);
 }
 
 .modal-content {
-    background: #1e1e1e;
+    background-color: #1e1e1e;
     border-radius: 8px;
     width: 80%;
     max-width: 800px;
     max-height: 80vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
 
 .modal-header {
-    padding: 16px 20px;
-    background: #2d2d2d;
+    padding: 12px 16px;
+    background-color: #2d2d2d;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #3d3d3d;
+    border-bottom: 1px solid #3e3e3e;
 }
 
 .modal-header h3 {

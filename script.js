@@ -234,7 +234,35 @@ async function openWindow(type) {
             break;
         case 'games':
             title = 'Murder Mystery Games';
-            content = '<div class="window-content"><p>Your games will appear here.</p></div>';
+            content = `
+                <div class="window-content">
+                    <div class="games-container">
+                        <a href="https://www.etsy.com/uk/listing/1887634120/printable-murder-mystery-game-the-final" target="_blank" class="game-icon">
+                            <img src="Murder Mystery Games icons/The Final Note.png" alt="The Final Note">
+                            <span>The Final Note</span>
+                        </a>
+                        <a href="https://www.etsy.com/uk/listing/1889219526/printable-murder-mystery-game-dead-air" target="_blank" class="game-icon">
+                            <img src="Murder Mystery Games icons/Dead Air.png" alt="Dead Air">
+                            <span>Dead Air</span>
+                        </a>
+                        <a href="https://www.etsy.com/uk/listing/4297690435/printable-murder-mystery-game-ether" target="_blank" class="game-icon">
+                            <img src="Murder Mystery Games icons/Ether Station.png" alt="Ether Station">
+                            <span>Ether Station</span>
+                        </a>
+                        <a href="https://www.etsy.com/uk/listing/4299237208/printable-murder-mystery-game-fading" target="_blank" class="game-icon">
+                            <img src="Murder Mystery Games icons/Fading Minds.png" alt="Fading Minds">
+                            <span>Fading Minds</span>
+                        </a>
+                        <a href="https://www.etsy.com/uk/listing/4301597752/printable-murder-mystery-game-faces-from" target="_blank" class="game-icon">
+                            <img src="Murder Mystery Games icons/Faces from the Past.png" alt="Faces from the Past">
+                            <span>Faces from the Past</span>
+                        </a>
+                        <a href="https://www.etsy.com/uk/listing/4303689410/printable-murder-mystery-game-secrets-of" target="_blank" class="game-icon">
+                            <img src="Murder Mystery Games icons/Secrets of Stones.png" alt="Secrets of Stones">
+                            <span>Secrets of Stones</span>
+                        </a>
+                    </div>
+                </div>`;
             break;
         default:
             title = 'Window';
