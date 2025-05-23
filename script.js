@@ -17,6 +17,53 @@ let offsetX, offsetY;
 // Password
 const PASSWORD = '1234';
 
+// Notes data - we'll store the content directly here
+const notesData = {
+    'call_clark_about_policy.txt': `Edwin to clarify health insurance status.
+Ask about last amendment clause.
+Find out what "emergency override" means.`,
+    'garden_tasks_autumn.txt': `• Prune the west hedge
+• Replace the dead rosemary pots
+• Ask Beatrice if she still wants the oak removed
+• Cover the swing set before frost`,
+    'if_they_ever_find_this.txt': `If they ever open this, then it means the mask broke.
+I never wanted to confess.
+Not in a courtroom. Not in a letter. Not even to her.
+But they're all watching me now, like they already know.
+Maybe that's what guilt looks like: knowing everyone else suspects, and not being able to stop them.`,
+    'kitchen_incident.txt': `The tea tasted different last night.
+Not bad, just unfamiliar.
+I said nothing.
+She was watching me the whole time.
+I wonder if she thought I'd notice.`,
+    'laundry_service_contact.txt': `Cetin Cleaners – 01423 988117
+Pick up on Mondays. Ask for Raymond.
+Never starch the collars again.`,
+    'one_of_them_knows.txt': `I'm certain now — someone saw the draft.
+But they didn't confront me. They've been too quiet.
+That silence is the part that unnerves me.
+Julian would've shouted.
+Beatrice would've cried.
+This one just… nodded at dinner.`,
+    'quiet_threats.txt': `Some threats are shouted.
+Others are baked into habits, little gestures, tone.
+Hers come folded in cloth and served with lemon.
+I've lived with it long enough to know the difference.`,
+    'recordings_deleted.txt': `I couldn't find the camera log from the west hallway.
+It should have been automatic.
+Checked the console — someone manually accessed it at 18:47.
+If it's who I think it is, then I misjudged them badly. Again.`,
+    'she_never_called_me_father.txt': `Strange how someone can speak to you for years
+and never once use your name.
+Not the real one, anyway.
+I called her my mistake in private.
+And yet I keep building her a future I won't even see.`,
+    'wine_cabinet_inventory.txt': `Château Lafite 1989 – 2 bottles (1 opened)
+Glenfarclas 25 yr – low
+Henri Jayer (reserved)
+Remove bottle from dining room, label unreadable`
+};
+
 // Initialize
 function init() {
     updateDateTime();
@@ -81,8 +128,85 @@ function unlock() {
     }
 }
 
+// Function to load and display notes
+function loadNotes() {
+    try {
+        let notesHTML = '<div class="notes-container">';
+        
+        // Add each note as a clickable item
+        Object.keys(notesData).forEach(note => {
+            const displayName = note.replace(/_/g, ' ').replace(/\.txt$/, '');
+            notesHTML += `
+                <div class="note-item" onclick="showNoteContent('${note}')">
+                    <i class="fas fa-file-alt"></i>
+                    <span>${displayName}</span>
+                </div>`;
+        });
+        
+        notesHTML += '</div><div id="note-content" class="note-content"></div>';
+        return notesHTML;
+    } catch (error) {
+        console.error('Error loading notes:', error);
+        return '<div class="error">Error loading notes. Please try again later.</div>';
+    }
+}
+
+// Function to show note content in a modal
+function showNoteContent(noteId) {
+    try {
+        const content = notesData[noteId] || 'Content not found.';
+        const displayName = noteId.replace(/_/g, ' ').replace(/\.txt$/, '');
+        
+        // Create or update modal
+        let modal = document.getElementById('note-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'note-modal';
+            modal.className = 'modal';
+            document.body.appendChild(modal);
+        }
+        
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>${displayName}</h3>
+                    <button class="close-btn" onclick="closeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <pre>${content}</pre>
+                </div>
+            </div>`;
+            
+        modal.style.display = 'flex';
+        
+        // Add click outside to close
+        modal.onclick = function(e) {
+            if (e.target === modal) closeModal();
+        };
+        
+        // Add escape key to close
+        document.onkeydown = function(e) {
+            if (e.key === 'Escape') closeModal();
+        };
+        
+    } catch (error) {
+        console.error('Error showing note:', error);
+        alert('Error showing note. Please try again.');
+    }
+}
+
+// Function to close the modal
+function closeModal() {
+    const modal = document.getElementById('note-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
 // Open a new window
-function openWindow(type) {
+async function openWindow(type) {
     const windowId = 'window-' + Date.now();
     const windowElement = document.createElement('div');
     windowElement.className = 'window';
@@ -95,7 +219,10 @@ function openWindow(type) {
     switch (type) {
         case 'notes':
             title = 'Notes';
-            content = '<div class="window-content"><p>Your notes will appear here.</p></div>';
+            content = `
+                <div class="window-content">
+                    ${loadNotes()}
+                </div>`;
             break;
         case 'documents':
             title = 'Documents';
@@ -130,8 +257,7 @@ function openWindow(type) {
                 </button>
             </div>
         </div>
-        ${content}
-    `;
+        ${content}`;
     
     // Add window to container
     windowsContainer.appendChild(windowElement);
