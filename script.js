@@ -274,6 +274,14 @@ const legalDocuments = [
         type: 'image',
         date: '8/22/2021',
         size: '3.2 MB'
+    },
+    {
+        id: 'succession_draft_v4',
+        title: 'Succession Draft v4',
+        file: 'Docs/Legal Documents/Succession Draft v4.png',
+        type: 'image',
+        date: '5/24/2025',
+        size: '2.1 MB'
     }
 ];
 
@@ -521,10 +529,6 @@ async function openWindow(type) {
                         <div class="painting-item" onclick="viewPainting('Photos/Painting1.png', 'Painting 1')">
                             <img src="Photos/Painting1.png" alt="Painting 1" class="painting-img">
                             <div class="painting-title">Painting 1</div>
-                        </div>
-                        <div class="painting-item" onclick="viewPainting('Photos/Painting2.png', 'Painting 2')">
-                            <img src="Photos/Painting2.png" alt="Painting 2" class="painting-img">
-                            <div class="painting-title">Painting 2</div>
                         </div>
                         <div class="painting-item" onclick="viewPainting('Photos/Painting3.png', 'Painting 3')">
                             <img src="Photos/Painting3.png" alt="Painting 3" class="painting-img">
@@ -990,8 +994,32 @@ function openFolder(folderType) {
     }
 }
 
+// Function to prompt for password
+function promptForDocumentPassword(callback) {
+    const password = prompt('This document is password protected. Please enter the password:');
+    if (password && password.toLowerCase() === 'nocturne') {
+        callback(true);
+    } else {
+        alert('Incorrect password. Access denied.');
+        callback(false);
+    }
+}
+
 // Function to view a document in a modal
 function viewDocument(doc) {
+    // Check if this is the protected document
+    if (doc.id === 'succession_draft_v4') {
+        promptForDocumentPassword((success) => {
+            if (success) {
+                showDocumentModal(doc);
+            }
+        });
+        return;
+    }
+    showDocumentModal(doc);
+}
+
+function showDocumentModal(doc) {
     // Create or get the document modal
     let docModal = document.getElementById('document-modal');
     
