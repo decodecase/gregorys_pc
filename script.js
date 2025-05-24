@@ -205,6 +205,50 @@ function closeModal() {
     }
 }
 
+// Function to view a painting in a modal
+function viewPainting(imageSrc, title) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+    modal.style.zIndex = '1000';
+    
+    modal.innerHTML = `
+        <div style="background: white; padding: 20px; border-radius: 5px; max-width: 90%; max-height: 90%; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                <h3 style="margin: 0;">${title}</h3>
+                <button onclick="this.parentNode.parentNode.parentNode.remove()" style="background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+            <div style="overflow: auto; max-height: 80vh;">
+                <img src="${imageSrc}" alt="${title}" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">
+            </div>
+        </div>`;
+    
+    document.body.appendChild(modal);
+    
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+// Function to close the document modal
+function closeDocumentModal() {
+    const docModal = document.getElementById('document-modal');
+    if (docModal) {
+        docModal.remove();
+    }
+}
+
 // Legal Documents data
 const legalDocuments = [
     {
@@ -216,20 +260,20 @@ const legalDocuments = [
         size: '2.4 MB'
     },
     {
-        id: 'tenancy_contract',
-        title: 'Tenancy Contract - Gleaming Cottage',
-        file: 'Docs/Legal Documents/Tenancy_Contract_Gleaming_Cottage.png',
-        type: 'document',
-        date: '3/22/2025',
-        size: '1.8 MB'
-    },
-    {
         id: 'thomas_grey_agreement',
         title: 'Thomas Grey Agreement',
         file: 'Docs/Legal Documents/Thomas Grey Agreement.png',
-        type: 'document',
-        date: '5/10/2025',
-        size: '2.1 MB'
+        type: 'image',
+        date: '6/7/2019',
+        size: '1.8 MB'
+    },
+    {
+        id: 'tenancy_contract',
+        title: 'Tenancy Contract - Gleaming Cottage',
+        file: 'Docs/Legal Documents/Tenancy_Contract_Gleaming_Cottage.png',
+        type: 'image',
+        date: '8/22/2021',
+        size: '3.2 MB'
     }
 ];
 
@@ -239,23 +283,23 @@ const downloads = [
         id: 'ashford_trust_october',
         title: 'Ashford Trust - October',
         file: 'Docs/Downloads/Ashford Trust October.png',
-        type: 'document',
+        type: 'image',
         date: '10/15/2024',
         size: '1.9 MB'
     },
     {
-        id: 'beatrice_photo',
-        title: 'Beatrice Photo 2021',
+        id: 'photo_beatrice_taped',
+        title: 'Photo - Beatrice (Taped)',
         file: 'Docs/Downloads/photo_2021_beatrice_taped.png',
         type: 'image',
-        date: '8/22/2021',
-        size: '3.2 MB'
+        date: '3/22/2021',
+        size: '2.5 MB'
     },
     {
         id: 'tea_catalogue',
         title: 'Tea Catalogue 2023',
         file: 'Docs/Downloads/tea_catalogue_2023.png',
-        type: 'document',
+        type: 'image',
         date: '1/5/2023',
         size: '2.7 MB'
     }
@@ -264,20 +308,44 @@ const downloads = [
 // Private folder data
 const privateDocuments = [
     {
+        id: 'january_2021',
+        title: '14 January 2021',
+        file: 'Docs/Private/14 January 2021.png',
+        type: 'image',
+        date: '1/14/2021',
+        size: '1.8 MB'
+    },
+    {
+        id: 'june_2022',
+        title: '03 June 2022',
+        file: 'Docs/Private/03 Tune 2022.png',
+        type: 'image',
+        date: '6/3/2022',
+        size: '1.6 MB'
+    },
+    {
+        id: 'no_date',
+        title: 'No Date',
+        file: 'Docs/Private/No Date.png',
+        type: 'image',
+        date: '10/26/2023',
+        size: '1.4 MB'
+    },
+    {
         id: 'old_will',
         title: 'Old Will',
         file: 'Docs/Private/Old Will.png',
-        type: 'document',
+        type: 'image',
         date: '6/12/2020',
         size: '2.1 MB'
     },
     {
-        id: 'missed_letters',
-        title: 'Missed Letters to Her',
-        file: 'Docs/Private/missed_letters_to_her.png',
+        id: 'fragment_heirnotes',
+        title: 'Fragment - Heir Notes',
+        file: 'Docs/Private/fragment_heirnotes_silentcup.png',
         type: 'image',
-        date: '9/3/2024',
-        size: '1.2 MB'
+        date: '5/24/2025',
+        size: '1.5 MB'
     }
 ];
 
@@ -414,8 +482,72 @@ async function openWindow(type) {
                 </style>`;
             break;
         case 'photos':
-            title = 'Photos';
-            content = '<div class="window-content"><p>Your photos will appear here.</p></div>';
+            title = 'Paintings';
+            content = `
+                <style>
+                    .paintings-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                        gap: 20px;
+                        padding: 20px;
+                    }
+                    .painting-item {
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        overflow: hidden;
+                        transition: transform 0.2s;
+                        background: #fff;
+                        cursor: pointer;
+                    }
+                    .painting-item:hover {
+                        transform: scale(1.02);
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    }
+                    .painting-img {
+                        width: 100%;
+                        height: 180px;
+                        object-fit: cover;
+                        border-bottom: 1px solid #eee;
+                    }
+                    .painting-title {
+                        padding: 8px;
+                        text-align: center;
+                        font-size: 13px;
+                        color: #333;
+                    }
+                </style>
+                <div class="window-content">
+                    <div class="paintings-grid">
+                        <div class="painting-item" onclick="viewPainting('Photos/Painting1.png', 'Painting 1')">
+                            <img src="Photos/Painting1.png" alt="Painting 1" class="painting-img">
+                            <div class="painting-title">Painting 1</div>
+                        </div>
+                        <div class="painting-item" onclick="viewPainting('Photos/Painting2.png', 'Painting 2')">
+                            <img src="Photos/Painting2.png" alt="Painting 2" class="painting-img">
+                            <div class="painting-title">Painting 2</div>
+                        </div>
+                        <div class="painting-item" onclick="viewPainting('Photos/Painting3.png', 'Painting 3')">
+                            <img src="Photos/Painting3.png" alt="Painting 3" class="painting-img">
+                            <div class="painting-title">Painting 3</div>
+                        </div>
+                        <div class="painting-item" onclick="viewPainting('Photos/Painting4.png', 'Painting 4')">
+                            <img src="Photos/Painting4.png" alt="Painting 4" class="painting-img">
+                            <div class="painting-title">Painting 4</div>
+                        </div>
+                        <div class="painting-item" onclick="viewPainting('Photos/Painting5.png', 'Painting 5')">
+                            <img src="Photos/Painting5.png" alt="Painting 5" class="painting-img">
+                            <div class="painting-title">Painting 5</div>
+                        </div>
+                        <div class="painting-item" onclick="viewPainting('Photos/Painting6.png', 'Painting 6')">
+                            <img src="Photos/Painting6.png" alt="Painting 6" class="painting-img">
+                            <div class="painting-title">Painting 6</div>
+                        </div>
+                        <div class="painting-item" onclick="viewPainting('Photos/Painting7.png', 'Painting 7')">
+                            <img src="Photos/Painting7.png" alt="Painting 7" class="painting-img">
+                            <div class="painting-title">Painting 7</div>
+                        </div>
+                    </div>
+                </div>`;
             break;
         case 'games':
             title = 'Murder Mystery Games';
@@ -916,7 +1048,7 @@ But you would have torn it apart, and maybe I wanted you to.
 Some wounds are easier to carry when no one offers to bandage them.
 
 — G.
-                    </div>` : 
+</div>` : 
                     doc.file.endsWith('.txt.rtf') ? 
                         `<div style="white-space: pre-wrap; font-family: monospace; padding: 15px; background: #f8f9fa; border-radius: 4px; max-height: 70vh; overflow-y: auto;">
                             [Content is encrypted or in an unsupported format]
@@ -965,20 +1097,41 @@ Some wounds are easier to carry when no one offers to bandage them.
     };
 }
 
-// Function to close the document modal
-function closeDocumentModal() {
-    const docModal = document.getElementById('document-modal');
-    if (docModal) {
-        docModal.style.display = 'none';
-    }
+// Function to view a painting in a modal
+function viewPainting(imageSrc, title) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+    modal.style.zIndex = '1000';
+    
+    modal.innerHTML = `
+        <div style="background: white; padding: 20px; border-radius: 5px; max-width: 90%; max-height: 90%; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                <h3 style="margin: 0;">${title}</h3>
+                <button onclick="this.parentNode.parentNode.parentNode.remove()" style="background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+            <div style="overflow: auto; max-height: 80vh;">
+                <img src="${imageSrc}" alt="${title}" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">
+            </div>
+        </div>`;
+    
+    document.body.appendChild(modal);
+    
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
 }
-
-// Close modal with Escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeDocumentModal();
-    }
-});
 
 // Function to go back to the main documents view
 function showMainView() {
